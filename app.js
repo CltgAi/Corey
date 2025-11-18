@@ -120,3 +120,17 @@ updateLiveMarket();
 // Update every 30 seconds
 setInterval(updateLiveMarket, 30000);
 
+function buildMarketHTML(dataObj) {
+    let html = "";
+    for (let key in dataObj) {
+        html += `
+            <div class="market-item">
+                <div>${key}</div>
+                <span>$${dataObj[key]}</span>
+            </div>
+        `;
+    }
+    return html;
+}
+
+
