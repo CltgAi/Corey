@@ -132,5 +132,87 @@ function buildMarketHTML(dataObj) {
     }
     return html;
 }
+async function loadFinanceData() {
+
+    /* -----------------------------------
+        1. STOCK MARKETS (Yahoo Finance)
+    -------------------------------------*/
+    const stockSymbols = "AAPL,MSFT,TSLA,AMZN,NVO.CO,MAERSK-B.CO,VWS.CO,BMW.DE,SAP.DE,SONY,INFY.NS";
+    const stockURL = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${stockSymbols}`;
+
+    let stockRes = await fetch(stockURL).then(r => r.json());
+    let stocks = {};
+
+    stockRes.quoteResponse.result.forEach(s => {
+        stocks[s.symbol] = s.regularMarketPrice;
+    });
+
+    document.getElementById("market-stocks").innerHTML = buildMarketHTML(stocks);
+
+
+    /* -----------------------------------
+        2. INDEXES (Yahoo Finance)
+    -------------------------------------*/
+    const indexSymbols = "^NDX,^GSPC,^GDAXI,^FTSE,^N225,^STOXX50E";
+    const indexURL = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${indexSymbols}`;
+
+    let indexRes = await fetch(indexURL).then(r => r.json());
+    let indexes = {};
+
+    indexRes.quoteResponse.result.forEach(s => {
+        indexes[s.shortName] = s.regularMarketPrice;
+    });
+
+    document.getElementById("market-index").innerHTML = buildMarketHTML(indexes);
+
+
+    /* -----------------------------------
+        3. FOREX (Yahoo Finance)
+    -------------------------------------*/
+    const forexSymbols = "EURUSD=X,USDJPY=X,GBPUSD=X";
+    const forexURL = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${forexSymbols}`;
+
+    let forexRes = await fetch(forexURL).then(r => r.json());
+    let forex = {};
+
+    forexRes.quoteResponse.result.forEach(s => {
+        forex[s.symbol] = s.regularMarketPrice;
+    });
+
+    document.getElementById("market-forex").innerHTML = buildMarketHTML(forex);
+
+
+    /* -----------------------------------
+        4. CRYPTO (CoinGecko)
+    -------------------------------------*/
+    const cryptoURL = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,xrp&vs_currencies=usd";
+
+    let cryptoRes = await fetch(cryptoURL).then(r => r.json());
+    let crypto = {
+        BTC: cryptoRes.bitcoin.usd,
+        ETH: cryptoRes.ethereum.usd,
+        SOL: cryptoRes.solana.usd,
+        XRP: cryptoRes.xrp.usd
+    };
+
+    document.getElementById("market-crypto").innerHTML = buildMarketHTML(crypto);
+
+
+    /* -----------------------------------
+        5. COMMODITIES (Free API)
+    -------------------------------------*/
+    const commoditiesURL = "https://api.exchangerate.host/latest?base=USD";
+    let commoditiesRes = await fetch(commoditiesURL).then(r => r.json());
+
+    let commodities = {
+        GOLD: (feeds = 2030), // can replace with paid API later
+        SILVER: 24.8,
+        OIL_WTI: 79.3,
+        OIL_BRENT: 83.2
+    };
+
+    document.getElementById("market-commodities").innerHTML = buildMarketHTML(commodities);
+
+}
 
 
