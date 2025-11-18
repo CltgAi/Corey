@@ -21,3 +21,24 @@ async function updateStock(sym){
   stockChart.data.labels = stockData.map(x=>x.t); stockChart.data.datasets[0].data = stockData.map(x=>x.p); stockChart.update();
 }
 document.addEventListener('DOMContentLoaded', function(){ initStockChart(); const sel=document.getElementById('stockSelect'); if(sel) updateStock(sel.value); setInterval(()=> updateStock(sel.value),10000); });
+document.addEventListener("DOMContentLoaded", () => {
+    loadStock("AAPL", "applePrice", "appleChange");
+    loadStock("MSFT", "msftPrice", "msftChange");
+    loadStock("TSLA", "teslaPrice", "teslaChange");
+});
+
+async function loadStock(symbol, priceID, changeID) {
+    const url = `https://financialmodelingprep.com/api/v3/quote/${symbol}?apikey=demo`;
+
+    const stockData = await safeFetchJSON(url);
+    if (!stockData || !stockData[0]) {
+        document.getElementById(priceID).innerText = "N/A";
+        document.getElementById(changeID).innerText = "N/A";
+        return;
+    }
+
+    const stock = stockData[0];
+
+    document.getElementById(priceID).innerText = `$${stock.price}`;
+    document.getElementById(changeID).innerText = `${stock.changesPercentage}%`;
+}
