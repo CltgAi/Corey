@@ -214,5 +214,7 @@ async function loadFinanceData() {
     document.getElementById("market-commodities").innerHTML = buildMarketHTML(commodities);
 
 }
+loadFinanceData();
+setInterval(loadFinanceData, 30000);
 
 
