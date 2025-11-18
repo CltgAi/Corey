@@ -14,3 +14,11 @@ async function safeFetchJSON(url) {
 
 
 function makeChart(id,type,labels,datasets,opts){const el=document.getElementById(id); if(!el) return; new Chart(el.getContext('2d'),{type:type,data:{labels:labels,datasets:datasets},options:opts||{}});} 
+// Check that all required DOM IDs exist
+function checkIDs(requiredIDs) {
+    requiredIDs.forEach(id => {
+        if (!document.getElementById(id)) {
+            console.warn("⚠ Missing DOM element ID:", id);
+        }
+    });
+}
