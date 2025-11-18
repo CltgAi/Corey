@@ -1,41 +1,62 @@
-// Mock KPI Data
-let data = {
-  revenue: "$1,240,000",
-  users: "12,842",
-  crypto: "BTC 43,120 USD",
-  growth: "+14.2%"
-};
+document.addEventListener("DOMContentLoaded", () => {
+    initDashboard();
+});
 
-// Insert KPI values
-document.getElementById("revenue").innerText = data.revenue;
-document.getElementById("users").innerText = data.users;
-document.getElementById("crypto").innerText = data.crypto;
-document.getElementById("growth").innerText = data.growth;
+async function initDashboard() {
+    // Check required IDs exist
+    checkIDs([
+        "marketStatus",
+        "marketChart",
+        "marketChange"
+    ]);
 
-// Navigation handler
-function navigate(section) {
-  window.location.href = section + ".html";
+    loadLiveMarketOverview();
+    setInterval(loadLiveMarketOverview, 45000); // refresh every 45s
 }
 
-// Chart.js Example
-const ctx = document.getElementById("mainChart");
+async function loadLiveMarketOverview() {
+    const url = "https://api.coingecko.com/api/v3/global";
 
-new Chart(ctx, {
-  type: "line",
-  data: {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    datasets: [{
-      label: "Revenue",
-      data: [120, 190, 300, 500, 200, 300, 700],
-      borderWidth: 3,
-      borderColor: "white",
-      tension: 0.3
-    }]
-  },
-  options: {
-    scales: {
-      y: { beginAtZero: true }
+    const data = await safeFetchJSON(url);
+    if (!data) {
+        document.getElementById("marketStatus").innerHTML = "Market data unavailable.";
+        return;
     }
-  }
-});
+
+    const mCap = data.data.total_market_cap.usd.toLocaleString();
+    const vol = data.data.total_volume.usd.toLocaleString();
+    const change = data.data.market_cap_change_percentage_24h_usd.toFixed(2);
+
+    document.getElementById("marketStatus").innerHTML = `
+        <strong>Total Market Cap:</strong> $${mCap}<br>
+        <strong>Total Volume (24h):</strong> $${vol}
+    `;
+
+    document.getElementById("marketChange").innerText = change + "%";
+
+    // Chart update
+    const chartCtx = document.getElementById("marketChart");
+
+    if (!window.marketChartObj) {
+        window.marketChartObj = new Chart(chartCtx, {
+            type: "doughnut",
+            data: {
+                labels: ["Market Cap", "Volume"],
+                datasets: [{
+                    data: [
+                        data.data.total_market_cap.usd,
+                        data.data.total_volume.usd
+                    ]
+                }]
+            }
+        });
+    } else {
+        window.marketChartObj.data.datasets[0].data = [
+            data.data.total_market_cap.usd,
+            data.data.total_volume.usd
+        ];
+        window.marketChartObj.update();
+    }
+}
+
 
