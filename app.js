@@ -1,26 +1,61 @@
-console.log("UI Loaded Successfully — GitHub Pages OK!");
-// ---- Dashboard Data Simulation ---- //
+/* ------------------------------
+   PAGE SECTION SWITCHER
+--------------------------------*/
 
-let datasetsCount = 3;
-let latestUpload = "finance_dataset.csv";
-let analysisCount = 12;
+function openSection(id) {
+    document.querySelectorAll('.section').forEach(sec => sec.style.display = "none");
 
-document.getElementById("datasetsCount").textContent = datasetsCount;
-document.getElementById("latestUpload").textContent = latestUpload;
-document.getElementById("analysisCount").textContent = analysisCount;
+    document.getElementById(id).style.display = "block";
+    document.getElementById("pageTitle").innerText = id.toUpperCase();
+}
 
-// ---- Activity Chart ---- //
+/* ------------------------------
+   LIVE FINANCE (STOCK SIMULATION)
+--------------------------------*/
 
-const ctx = document.getElementById('activityChart').getContext('2d');
+let stockCtx = document.getElementById("stockChart");
 
-const activityChart = new Chart(ctx, {
-    type: 'line',
+let stockChart = new Chart(stockCtx, {
+    type: "line",
     data: {
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        labels: ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA"],
         datasets: [{
-            label: "AI Tasks Completed",
-            data: [3, 7, 5, 8, 12, 10, 15],
+            label: "Stock Prices (Simulated)",
+            data: [182, 323, 141, 178, 214],
             borderWidth: 3,
+            borderColor: "#00aaff"
         }]
+    },
+    options: {
+        responsive: true,
+        scales: { y: { beginAtZero: false } }
     }
 });
+
+/* ------------------------------
+   LIVE CRYPTO (SIMULATION)
+--------------------------------*/
+
+let cryptoCtx = document.getElementById("cryptoChart");
+
+let cryptoChart = new Chart(cryptoCtx, {
+    type: "bar",
+    data: {
+        labels: ["BTC", "ETH", "ADA", "XRP", "SOL"],
+        datasets: [{
+            label: "Crypto Prices (Simulated)",
+            data: [42150, 2400, 0.52, 0.68, 102],
+            backgroundColor: "#415a77"
+        }]
+    },
+    options: {
+        responsive: true
+    }
+});
+
+/* ------------------------------
+   LIVE MARKET STATUS (TEXT)
+--------------------------------*/
+
+document.getElementById("liveMarketBox").innerHTML =
+    "<b>Stocks:</b> Mixed • <b>Crypto:</b> Slightly Up • <b>Gold:</b> Stable";
