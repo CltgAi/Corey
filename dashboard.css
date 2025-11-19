@@ -65,3 +65,4 @@ body {
   padding: 20px;
   border-radius: 12px;
 }
+<a href="#dashboard" onclick="openSection('dashboard')">Dashboard</a>
