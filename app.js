@@ -333,5 +333,35 @@ async function loadFinanceData() {
 loadFinanceData();
 setInterval(loadFinanceData, 30000);
 
+async function loadLiveStocks() {
+    const tickers = ["AAPL.US", "TSLA.US", "MSFT.US", "NVDA.US", "AMZN.US"];
+
+    const stockContainer = document.getElementById("live-stock-feed");
+    stockContainer.innerHTML = `<p style="color:white;">Loading...</p>`;
+
+    try {
+        let html = "";
+        for (let t of tickers) {
+            const url = `https://stooq.com/q/l/?s=${t}&f=sd2t2ohlcv&h&e=json`;
+            const res = await fetch(url);
+            const data = await res.json();
+            const s = data[0];
+
+            html += `
+                <div class="stock-item">
+                    <h4>${s.symbol}</h4>
+                    <p>Price: ${s.close}</p>
+                    <p>Open: ${s.open}</p>
+                    <p>High: ${s.high}</p>
+                    <p>Low: ${s.low}</p>
+                </div>
+            `;
+        }
+        stockContainer.innerHTML = html;
+
+    } catch (err) {
+        stockContainer.innerHTML = `<p style="color:red;">Error loading live stocks</p>`;
+    }
+}
 
 
