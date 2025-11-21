@@ -135,3 +135,24 @@ canvas {
     --white: #ffffff;
     --text-light: #e0e6ed;
 }
+#finance {
+    padding: 20px;
+    color: white;
+}
+
+.stock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.stock-item {
+    background: var(--blue);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.stock-item h4 {
+    margin: 0 0 5px 0;
+}
