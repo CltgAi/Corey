@@ -394,5 +394,33 @@ async function loadLiveBonds() {
         bondContainer.innerHTML = `<p style="color:red;">Error loading live bonds</p>`;
     }
 }
+// common.js (safe helpers)
+async function safeFetchJSON(url, options = {}) {
+  try {
+    const res = await fetch(url, options);
+    if (!res.ok) throw new Error(`HTTP ${res.status} - ${res.statusText}`);
+    return await res.json();
+  } catch (err) {
+    console.error("safeFetchJSON error for", url, err);
+    return null;
+  }
+}
+
+function buildMarketHTML(dataObj) {
+  // dataObj: { label: value }
+  if (!dataObj || Object.keys(dataObj).length === 0) return "<div class='small'>No data</div>";
+  let html = "";
+  for (const k of Object.keys(dataObj)) {
+    const v = dataObj[k] === null || dataObj[k] === undefined ? "N/A" : dataObj[k];
+    html += `<div class="market-item"><div class="label">${k}</div><div class="value">${v}</div></div>`;
+  }
+  return html;
+}
+
+function checkIDs(ids) {
+  ids.forEach(id => {
+    if (!document.getElementById(id)) console.warn("Missing DOM ID:", id);
+  });
+}
 
 
