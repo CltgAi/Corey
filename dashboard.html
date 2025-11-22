@@ -10,3 +10,43 @@
 
 <!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Dashboard</title><link rel='stylesheet' href='assets/css/style.css'></head><body><h1>Dashboard</h1><canvas id='overviewChart'></canvas><script src='https://cdn.jsdelivr.net/npm/chart.js'></script><script src='assets/js/common.js'></script><script>makeChart('overviewChart','line', ['Mon','Tue','Wed'], [{label:'Data',data:[1,2,3], borderColor:'#1f77d0'}]);</script></body></html>
 <a href="#dashboard" onclick="openSection('dashboard')">Dashboard</a>
+<!-- FINANCE MASTER PANEL -->
+<section id="finance" class="section">
+  <div class="card">
+    <h2>🌍 Live Finance — Markets & Instruments</h2>
+    <p class="small">Real-time prices (stocks, indices, forex, bonds, commodities, crypto). Auto-refresh every 30s.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Stocks</h3>
+        <div id="market-stocks">Loading stocks...</div>
+      </div>
+
+      <div class="card">
+        <h3>Indexes</h3>
+        <div id="market-index">Loading indexes...</div>
+      </div>
+
+      <div class="card">
+        <h3>Forex</h3>
+        <div id="market-forex">Loading forex...</div>
+      </div>
+
+      <div class="card">
+        <h3>Commodities</h3>
+        <div id="market-commodities">Loading commodities...</div>
+      </div>
+
+      <div class="card">
+        <h3>Bonds</h3>
+        <div id="market-bonds">Loading bonds...</div>
+      </div>
+
+      <div class="card">
+        <h3>Crypto</h3>
+        <div id="market-crypto">Loading crypto...</div>
+      </div>
+    </div>
+
+  </div>
+</section>
