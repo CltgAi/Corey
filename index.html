@@ -1,105 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Corey AI - New Layout</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Corey AI — Pro UI</title>
+
+  <!-- Tailwind for rapid prototyping (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Optional: Chart.js for charts placeholders -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="style.css">
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
+    /* Pro UI add-ons (glass, transitions). Keep minimal — primary styles live in style.css */
+    .glass {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(8px) saturate(120%);
+      border: 1px solid rgba(255,255,255,0.06);
     }
-    header {
-      background: #0d1117;
-      color: #fff;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    body.dark .glass {
+      background: rgba(8,10,12,0.5);
+      border: 1px solid rgba(255,255,255,0.04);
     }
-    nav a {
-      color: #fff;
-      margin-left: 1.5rem;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .container {
-      padding: 2rem;
-      max-width: 1400px;
-      margin: auto;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .card h2 {
-      margin-top: 0;
-    }
-      body.dark {
-      background:#0d1117;
-      color:#e6edf3;
-    }
-    body.dark .card {
-      background:#161b22;
-      color:#e6edf3;
-      box-shadow:0 2px 6px rgba(255,255,255,0.05);
-    }
-    body.dark header{
-      background:#010409;
-    }
-    
-    </style>
+    .metric { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body>
-  <header>
-    <div class="logo">Corey AI</div>
-    <nav>
-      <a href="#dashboard">Dashboard</a>
-      <a href="#finance">Finance</a>
-      <a href="#crypto">Crypto</a>
-      <a href="#upload">Upload Data</a>
-    </nav>
-    <button id="darkToggle" style="background:#222;color:#fff;padding:0.5rem 1rem;border:none;border-radius:8px;cursor:pointer;">Dark Mode</button>
-</header>
+<body class="antialiased bg-gray-50 text-gray-900 dark:bg-[#0b0f14] dark:text-gray-100">
+  <div class="min-h-screen flex">
 
-  <div class="container">
-    <h1>Live Market Suite</h1>
+    <!-- SIDEBAR -->
+    <aside class="w-72 bg-gradient-to-b from-slate-900 to-slate-800 text-slate-100 p-6 hidden md:block">
+      <div class="mb-8">
+        <h1 class="text-2xl font-semibold">Corey AI</h1>
+        <p class="text-sm text-slate-300 mt-1">Pro Dashboard v01</p>
+      </div>
+      <nav class="space-y-2">
+        <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#dashboard">Dashboard</a>
+        <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#finance">Finance</a>
+        <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#crypto">Crypto</a>
+        <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#upload">Upload</a>
+        <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#settings">Settings</a>
+      </nav>
 
-    <div class="grid">
-      <div class="card"><h2>Live Stock Market</h2><p>Data placeholder</p></div>
-      <div class="card"><h2>Crypto Overview</h2><p>Data placeholder</p></div>
-      <div class="card"><h2>Commodities</h2><p>Data placeholder</p></div>
-      <div class="card"><h2>US Stocks</h2><p>Data placeholder</p></div>
-      <div class="card"><h2>EU Stocks</h2><p>Data placeholder</p></div>
-      <div class="card"><h2>Bonds & ETFs</h2><p>Data placeholder</p></div>
-      <div class="card"><h2>Top 50 Live Prices</h2><p>Data placeholder</p></div>
-      <div class="card"><h2>Upload CSV for Analysis</h2><p>Upload module placeholder</p></div>
-      <div class="card" id="stocks-card"></div>
-      <div class="card" id="crypto-card"></div>
-      <div class="card" id="eu-card"></div>
-      <div class="card" id="commodities-card"></div>
-      <div class="card" id="etf-card"></div>
-      <div class="card" id="top50-card"></div>
+      <div class="mt-8 text-sm text-slate-400">
+        <p class="mb-2">Account</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-500"></div>
+          <div>
+            <div class="font-medium">Corey Admin</div>
+            <div class="text-xs text-slate-400">Pro • Member</div>
+          </div>
+        </div>
+      </div>
+    </aside>
 
-    </div>
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 p-6">
 
+      <!-- TOPBAR -->
+      <header class="flex items-center justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-2xl font-bold">Live Market Suite</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Overview · Real-time insights · Upload & analyze</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="hidden sm:flex items-center gap-3 bg-white/60 dark:bg-white/5 rounded-full p-1 shadow-sm">
+            <button id="darkToggle" class="px-3 py-1 rounded-full text-sm">Dark Mode</button>
+            <button id="refreshAll" class="px-3 py-1 rounded-full text-sm">Refresh</button>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button class="p-2 rounded-lg glass" title="Notifications">
+              🔔
+            </button>
+            <button class="p-2 rounded-lg glass" title="Profile">
+              👤
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- METRICS ROW -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="p-4 rounded-2xl glass">
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-sm text-gray-400">Total Market Cap</p>
+              <div class="mt-2 text-2xl font-semibold metric">$--</div>
+            </div>
+            <div class="text-green-400 font-bold">+0.0%</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl glass">
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-sm text-gray-400">Top Gainer (24h)</p>
+              <div class="mt-2 text-2xl font-semibold metric">—</div>
+            </div>
+            <div class="text-green-400 font-bold">+0.0%</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl glass">
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-sm text-gray-400">Watchlist Change</p>
+              <div class="mt-2 text-2xl font-semibold metric">—</div>
+            </div>
+            <div class="text-red-400 font-bold">-0.0%</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GRID: Charts & Lists -->
+      <section class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+        <!-- Left: Large Market Chart -->
+        <div class="xl:col-span-2 p-6 rounded-3xl glass">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold">Market Overview (24h)</h3>
+            <div class="text-sm text-gray-400">USD · Live</div>
+          </div>
+          <canvas id="marketChart" height="160"></canvas>
+        </div>
+
+        <!-- Right: Cards list -->
+        <div class="space-y-4">
+          <div class="p-4 rounded-2xl glass">
+            <h4 class="font-semibold mb-3">Top Cryptos</h4>
+            <div id="crypto-list" class="space-y-2 text-sm text-gray-200">Loading…</div>
+          </div>
+
+          <div class="p-4 rounded-2xl glass">
+            <h4 class="font-semibold mb-3">Live US Stocks</h4>
+            <div id="stocks-list" class="space-y-2 text-sm text-gray-200">Loading…</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECOND ROW: Tables / Upload -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+        <div class="col-span-2 p-6 rounded-3xl glass">
+          <h3 class="font-semibold mb-4">Top 50 Live Prices</h3>
+          <div id="top50-scroll" style="max-height:380px; overflow:auto">Loading…</div>
+        </div>
+
+        <div class="p-6 rounded-3xl glass">
+          <h3 class="font-semibold mb-3">Upload CSV</h3>
+          <input id="csvUpload" type="file" accept=".csv" class="w-full p-3 rounded-lg bg-white/5" />
+          <p class="text-sm text-gray-400 mt-3">Supported: date, symbol, price — CSV with header row.</p>
+        </div>
+      </section>
+
+      <footer class="mt-8 text-sm text-gray-500">© Corey AI — Pro UI • Built for GitHub Pages</footer>
+    </main>
   </div>
-<script>
-const toggle = document.getElementById('darkToggle');
-const body = document.body;
-toggle.addEventListener('click',()=>{
-  body.classList.toggle('dark');
-});
-</script>
+
+  <script src="main.js" defer></script>
+
+  <script>
+    // Lightweight chart placeholder using Chart.js
+    document.addEventListener('DOMContentLoaded', () => {
+      const ctx = document.getElementById('marketChart');
+      if (ctx) {
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: Array.from({length: 24}, (_,i)=>`${i}h`),
+            datasets: [{
+              label: 'Market Index',
+              data: Array.from({length:24}, ()=> Math.random()*1000 + 2000),
+              fill: true,
+              tension: 0.3
+            }]
+          },
+          options: { responsive:true, maintainAspectRatio:false }
+        });
+      }
+
+      // Quick hook to wire refresh button (main.js also provides refresh)
+      const refresh = document.getElementById('refreshAll');
+      if (refresh) refresh.addEventListener('click', ()=>{ window.refreshAll && window.refreshAll(); });
+    });
+  </script>
 </body>
 </html>
 
