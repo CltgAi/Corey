@@ -3,12 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Corey AI — Pro UI Updated Chart</title>
+  <title>Corey AI — Pro UI Full</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="style.css">
-
   <style>
     .glass {
       background: rgba(255,255,255,0.06);
@@ -93,7 +91,7 @@
       <!-- MAIN GRID -->
       <section class="grid grid-cols-1 xl:grid-cols-2 gap-6">
 
-        <!-- Market Chart (fitted) -->
+        <!-- Market Chart -->
         <div class="p-6 rounded-3xl glass max-w-full min-h-[320px]">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-lg font-semibold">Market Overview (24h)</h3>
@@ -104,11 +102,11 @@
 
         <!-- Right Column Cards -->
         <div class="space-y-4">
-          <div class="p-4 rounded-2xl glass">
+          <div class="p-4 rounded-2xl glass" id="cryptoCard">
             <h4 class="font-semibold mb-3">Top Cryptos</h4>
             <div id="crypto-list" class="space-y-2 text-sm text-gray-200">Loading…</div>
           </div>
-          <div class="p-4 rounded-2xl glass">
+          <div class="p-4 rounded-2xl glass" id="financeCard">
             <h4 class="font-semibold mb-3">Live US Stocks</h4>
             <div id="stocks-list" class="space-y-2 text-sm text-gray-200">Loading…</div>
           </div>
@@ -132,38 +130,47 @@
     </main>
   </div>
 
-  <script src="main.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Chart.js initialization
       const ctx = document.getElementById('marketChart').getContext('2d');
-      if (!ctx) return;
-
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: Array.from({length: 24}, (_, i) => `${i}h`),
-          datasets: [{
-            label: 'Market Index',
-            data: Array.from({length:24}, () => Math.random()*1000 + 2000),
-            borderColor: 'rgba(59, 130, 246, 1)',
-            backgroundColor: 'rgba(59, 130, 246, 0.2)',
-            tension: 0.3,
-            fill: true,
-            pointRadius: 3,
-            pointHoverRadius: 5
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: { grid: { display: false }, title: { display: true, text: 'Hour' } },
-            y: { beginAtZero: false, title: { display: true, text: 'USD Value' } }
+      if (ctx) {
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: Array.from({length: 24}, (_, i) => `${i}h`),
+            datasets: [{
+              label: 'Market Index',
+              data: Array.from({length:24}, () => Math.random()*1000 + 2000),
+              borderColor: 'rgba(59, 130, 246, 1)',
+              backgroundColor: 'rgba(59, 130, 246, 0.2)',
+              tension: 0.3,
+              fill: true,
+              pointRadius: 3,
+              pointHoverRadius: 5
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { grid: { display: false }, title: { display: true, text: 'Hour' } },
+              y: { beginAtZero: false, title: { display: true, text: 'USD Value' } }
+            }
           }
-        }
-      });
+        });
+      }
 
-      // Hook buttons if needed
+      // Button functionality: hide/show modules
+      const financeBtn = document.getElementById('financeBtn');
+      const cryptoBtn = document.getElementById('cryptoBtn');
+      const financeCard = document.getElementById('financeCard');
+      const cryptoCard = document.getElementById('cryptoCard');
+
+      if(financeBtn && financeCard) financeBtn.addEventListener('click', ()=>{ financeCard.classList.remove('hidden'); cryptoCard.classList.add('hidden'); });
+      if(cryptoBtn && cryptoCard) cryptoBtn.addEventListener('click', ()=>{ cryptoCard.classList.remove('hidden'); financeCard.classList.add('hidden'); });
+
+      // Refresh button hook
       const refresh = document.getElementById('refreshAll');
       if (refresh) refresh.addEventListener('click', ()=>{ window.refreshAll && window.refreshAll(); });
     });
