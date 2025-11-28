@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Corey AI — Pro UI Full</title>
+  <title>Corey AI — Pro UI Scaled Chart</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     .glass {
       background: rgba(255,255,255,0.06);
@@ -21,161 +22,167 @@
   </style>
 </head>
 <body class="antialiased bg-gray-50 text-gray-900 dark:bg-[#0b0f14] dark:text-gray-100">
-  <div class="min-h-screen flex">
+<div class="min-h-screen flex">
 
-    <!-- SIDEBAR -->
-    <aside class="w-72 bg-gradient-to-b from-slate-900 to-slate-800 text-slate-100 p-6 hidden md:block">
-      <div class="mb-8">
-        <h1 class="text-2xl font-semibold">Corey AI</h1>
-        <p class="text-sm text-slate-300 mt-1">Pro Dashboard v01</p>
+  <!-- SIDEBAR -->
+  <aside class="w-72 bg-gradient-to-b from-slate-900 to-slate-800 text-slate-100 p-6 hidden md:block">
+    <div class="mb-8">
+      <h1 class="text-2xl font-semibold">Corey AI</h1>
+      <p class="text-sm text-slate-300 mt-1">Pro Dashboard v01</p>
+    </div>
+    <nav class="space-y-2">
+      <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#dashboard">Dashboard</a>
+      <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#finance">Finance</a>
+      <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#crypto">Crypto</a>
+      <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#upload">Upload</a>
+      <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#settings">Settings</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 p-6 max-w-7xl mx-auto">
+
+    <!-- TOPBAR -->
+    <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div>
+        <h2 class="text-2xl font-bold">Live Market Suite</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Overview · Real-time insights · Upload & analyze</p>
       </div>
-      <nav class="space-y-2">
-        <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#dashboard">Dashboard</a>
-        <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#finance">Finance</a>
-        <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#crypto">Crypto</a>
-        <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#upload">Upload</a>
-        <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#settings">Settings</a>
-      </nav>
-    </aside>
+      <div class="flex flex-wrap gap-3 items-center">
+        <button id="financeBtn" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg">Finance</button>
+        <button id="cryptoBtn" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg">Crypto</button>
+        <button id="darkToggle" class="px-3 py-1 rounded-full text-sm bg-white/60 dark:bg-white/5">Dark Mode</button>
+        <button id="refreshAll" class="px-3 py-1 rounded-full text-sm bg-white/60 dark:bg-white/5">Refresh</button>
+      </div>
+    </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-1 p-6 max-w-7xl mx-auto">
-
-      <!-- TOPBAR -->
-      <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div>
-          <h2 class="text-2xl font-bold">Live Market Suite</h2>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Overview · Real-time insights · Upload & analyze</p>
-        </div>
-        <div class="flex flex-wrap gap-3 items-center">
-          <button id="financeBtn" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg">Finance</button>
-          <button id="cryptoBtn" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg">Crypto</button>
-          <button id="darkToggle" class="px-3 py-1 rounded-full text-sm bg-white/60 dark:bg-white/5">Dark Mode</button>
-          <button id="refreshAll" class="px-3 py-1 rounded-full text-sm bg-white/60 dark:bg-white/5">Refresh</button>
-        </div>
-      </header>
-
-      <!-- METRICS ROW -->
-      <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div class="p-4 rounded-2xl glass">
-          <div class="flex items-start justify-between">
-            <div>
-              <p class="text-sm text-gray-400">Total Market Cap</p>
-              <div class="mt-2 text-2xl font-semibold metric">$--</div>
-            </div>
-            <div class="text-green-400 font-bold">+0.0%</div>
+    <!-- METRICS ROW -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="p-4 rounded-2xl glass">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm text-gray-400">Total Market Cap</p>
+            <div class="mt-2 text-2xl font-semibold metric">$--</div>
           </div>
+          <div class="text-green-400 font-bold">+0.0%</div>
         </div>
+      </div>
 
-        <div class="p-4 rounded-2xl glass">
-          <div class="flex items-start justify-between">
-            <div>
-              <p class="text-sm text-gray-400">Top Gainer (24h)</p>
-              <div class="mt-2 text-2xl font-semibold metric">—</div>
-            </div>
-            <div class="text-green-400 font-bold">+0.0%</div>
+      <div class="p-4 rounded-2xl glass">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm text-gray-400">Top Gainer (24h)</p>
+            <div class="mt-2 text-2xl font-semibold metric">—</div>
           </div>
+          <div class="text-green-400 font-bold">+0.0%</div>
         </div>
+      </div>
 
-        <div class="p-4 rounded-2xl glass">
-          <div class="flex items-start justify-between">
-            <div>
-              <p class="text-sm text-gray-400">Watchlist Change</p>
-              <div class="mt-2 text-2xl font-semibold metric">—</div>
-            </div>
-            <div class="text-red-400 font-bold">-0.0%</div>
+      <div class="p-4 rounded-2xl glass">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm text-gray-400">Watchlist Change</p>
+            <div class="mt-2 text-2xl font-semibold metric">—</div>
           </div>
+          <div class="text-red-400 font-bold">-0.0%</div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- MAIN GRID -->
-      <section class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+    <!-- MAIN GRID -->
+    <section class="grid grid-cols-1 xl:grid-cols-2 gap-6">
 
-        <!-- Market Chart -->
-       <div class="p-6 rounded-3xl glass max-w-full sm:max-w-4xl mx-auto" style="height: 320px;">
-  <div class="flex items-center justify-between mb-4">
-    <h3 class="text-lg font-semibold">Market Overview (24h)</h3>
-    <div class="text-sm text-gray-400">USD · Live</div>
-  </div>
-  <canvas id="marketChart"></canvas>
+      <!-- Market Chart -->
+      <div class="p-6 rounded-3xl glass max-w-full sm:max-w-4xl mx-auto" style="height: 320px;">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold">Market Overview (24h)</h3>
+          <div class="text-sm text-gray-400">USD · Live</div>
+        </div>
+        <canvas id="marketChart"></canvas>
+      </div>
+
+      <!-- Right Column Cards -->
+      <div class="space-y-4">
+        <div class="p-4 rounded-2xl glass" id="cryptoCard">
+          <h4 class="font-semibold mb-3">Top Cryptos</h4>
+          <div id="crypto-list" class="space-y-2 text-sm text-gray-200">Loading…</div>
+        </div>
+        <div class="p-4 rounded-2xl glass" id="financeCard">
+          <h4 class="font-semibold mb-3">Live US Stocks</h4>
+          <div id="stocks-list" class="space-y-2 text-sm text-gray-200">Loading…</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SECOND ROW: Tables / Upload -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+      <div class="col-span-2 p-6 rounded-3xl glass">
+        <h3 class="font-semibold mb-4">Top 50 Live Prices</h3>
+        <div id="top50-scroll" style="max-height:380px; overflow:auto">Loading…</div>
+      </div>
+      <div class="p-6 rounded-3xl glass">
+        <h3 class="font-semibold mb-3">Upload CSV</h3>
+        <input id="csvUpload" type="file" accept=".csv" class="w-full p-3 rounded-lg bg-white/5" />
+        <p class="text-sm text-gray-400 mt-3">Supported: date, symbol, price — CSV with header row.</p>
+      </div>
+    </section>
+
+    <footer class="mt-8 text-sm text-gray-500">© Corey AI — Pro UI • Built for GitHub Pages</footer>
+  </main>
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
-        <!-- Right Column Cards -->
-        <div class="space-y-4">
-          <div class="p-4 rounded-2xl glass" id="cryptoCard">
-            <h4 class="font-semibold mb-3">Top Cryptos</h4>
-            <div id="crypto-list" class="space-y-2 text-sm text-gray-200">Loading…</div>
-          </div>
-          <div class="p-4 rounded-2xl glass" id="financeCard">
-            <h4 class="font-semibold mb-3">Live US Stocks</h4>
-            <div id="stocks-list" class="space-y-2 text-sm text-gray-200">Loading…</div>
-          </div>
-        </div>
-      </section>
+  // Chart.js initialization
+  const ctx = document.getElementById('marketChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Array.from({length: 24}, (_, i) => `${i}h`),
+      datasets: [{
+        label: 'Market Index',
+        data: Array.from({length: 24}, () => Math.random()*1000 + 2000),
+        borderColor: 'rgba(59, 130, 246, 1)',
+        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+        tension: 0.3,
+        fill: true,
+        pointRadius: 2,
+        pointHoverRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { grid: { display: false }, title: { display: true, text: 'Hour' } },
+        y: { beginAtZero: false, title: { display: true, text: 'USD Value' } }
+      },
+      plugins: { legend: { display: true, position: 'top' } }
+    }
+  });
 
-      <!-- SECOND ROW: Tables / Upload -->
-      <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-        <div class="col-span-2 p-6 rounded-3xl glass">
-          <h3 class="font-semibold mb-4">Top 50 Live Prices</h3>
-          <div id="top50-scroll" style="max-height:380px; overflow:auto">Loading…</div>
-        </div>
-        <div class="p-6 rounded-3xl glass">
-          <h3 class="font-semibold mb-3">Upload CSV</h3>
-          <input id="csvUpload" type="file" accept=".csv" class="w-full p-3 rounded-lg bg-white/5" />
-          <p class="text-sm text-gray-400 mt-3">Supported: date, symbol, price — CSV with header row.</p>
-        </div>
-      </section>
+  // Show/hide Finance & Crypto cards
+  const financeBtn = document.getElementById('financeBtn');
+  const cryptoBtn = document.getElementById('cryptoBtn');
+  const financeCard = document.getElementById('financeCard');
+  const cryptoCard = document.getElementById('cryptoCard');
 
-      <footer class="mt-8 text-sm text-gray-500">© Corey AI — Pro UI • Built for GitHub Pages</footer>
-    </main>
-  </div>
+  financeBtn.addEventListener('click', () => {
+    financeCard.classList.remove('hidden');
+    cryptoCard.classList.add('hidden');
+  });
+  cryptoBtn.addEventListener('click', () => {
+    cryptoCard.classList.remove('hidden');
+    financeCard.classList.add('hidden');
+  });
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Chart.js initialization
-      const ctx = document.getElementById('marketChart').getContext('2d');
-      if (ctx) {
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: Array.from({length: 24}, (_, i) => `${i}h`),
-            datasets: [{
-              label: 'Market Index',
-              data: Array.from({length:24}, () => Math.random()*1000 + 2000),
-              borderColor: 'rgba(59, 130, 246, 1)',
-              backgroundColor: 'rgba(59, 130, 246, 0.2)',
-              tension: 0.3,
-              fill: true,
-              pointRadius: 3,
-              pointHoverRadius: 5
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              x: { grid: { display: false }, title: { display: true, text: 'Hour' } },
-              y: { beginAtZero: false, title: { display: true, text: 'USD Value' } }
-            }
-          }
-        });
-      }
+  // Refresh button hook
+  const refresh = document.getElementById('refreshAll');
+  if (refresh) refresh.addEventListener('click', () => { window.refreshAll && window.refreshAll(); });
+});
+</script>
 
-      // Button functionality: hide/show modules
-      const financeBtn = document.getElementById('financeBtn');
-      const cryptoBtn = document.getElementById('cryptoBtn');
-      const financeCard = document.getElementById('financeCard');
-      const cryptoCard = document.getElementById('cryptoCard');
-
-      if(financeBtn && financeCard) financeBtn.addEventListener('click', ()=>{ financeCard.classList.remove('hidden'); cryptoCard.classList.add('hidden'); });
-      if(cryptoBtn && cryptoCard) cryptoBtn.addEventListener('click', ()=>{ cryptoCard.classList.remove('hidden'); financeCard.classList.add('hidden'); });
-
-      // Refresh button hook
-      const refresh = document.getElementById('refreshAll');
-      if (refresh) refresh.addEventListener('click', ()=>{ window.refreshAll && window.refreshAll(); });
-    });
-  </script>
 </body>
 </html>
-
