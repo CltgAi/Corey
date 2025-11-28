@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Corey AI — Pro UI Adjusted</title>
+  <title>Corey AI — Pro UI Updated Chart</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -93,16 +93,16 @@
       <!-- MAIN GRID -->
       <section class="grid grid-cols-1 xl:grid-cols-2 gap-6">
 
-        <!-- Market Chart (fitted width) -->
-        <div class="p-6 rounded-3xl glass max-w-full">
+        <!-- Market Chart (fitted) -->
+        <div class="p-6 rounded-3xl glass max-w-full min-h-[320px]">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-lg font-semibold">Market Overview (24h)</h3>
             <div class="text-sm text-gray-400">USD · Live</div>
           </div>
-          <canvas id="marketChart" height="240"></canvas>
+          <canvas id="marketChart" width="800" height="300"></canvas>
         </div>
 
-        <!-- Right Column: Module Cards -->
+        <!-- Right Column Cards -->
         <div class="space-y-4">
           <div class="p-4 rounded-2xl glass">
             <h4 class="font-semibold mb-3">Top Cryptos</h4>
@@ -135,22 +135,37 @@
   <script src="main.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const ctx = document.getElementById('marketChart');
-      if (ctx) {
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: Array.from({length: 24}, (_,i)=>`${i}h`),
-            datasets: [{
-              label: 'Market Index',
-              data: Array.from({length:24}, ()=> Math.random()*1000 + 2000),
-              fill: true,
-              tension: 0.3
-            }]
-          },
-          options: { responsive:true, maintainAspectRatio:false }
-        });
-      }
+      const ctx = document.getElementById('marketChart').getContext('2d');
+      if (!ctx) return;
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: Array.from({length: 24}, (_, i) => `${i}h`),
+          datasets: [{
+            label: 'Market Index',
+            data: Array.from({length:24}, () => Math.random()*1000 + 2000),
+            borderColor: 'rgba(59, 130, 246, 1)',
+            backgroundColor: 'rgba(59, 130, 246, 0.2)',
+            tension: 0.3,
+            fill: true,
+            pointRadius: 3,
+            pointHoverRadius: 5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { grid: { display: false }, title: { display: true, text: 'Hour' } },
+            y: { beginAtZero: false, title: { display: true, text: 'USD Value' } }
+          }
+        }
+      });
+
+      // Hook buttons if needed
+      const refresh = document.getElementById('refreshAll');
+      if (refresh) refresh.addEventListener('click', ()=>{ window.refreshAll && window.refreshAll(); });
     });
   </script>
 </body>
