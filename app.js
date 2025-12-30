@@ -35,3 +35,27 @@ document.getElementById("csvFile").addEventListener("change", function () {
 
     reader.readAsText(file);
 });
+function getSentiment(change) {
+    if (change > 0.7) return { label: "Bullish", class: "bullish" };
+    if (change < -0.7) return { label: "Bearish", class: "bearish" };
+    return { label: "Neutral", class: "neutral" };
+}
+
+function updateAISummary(segment, change, text) {
+    const sentiment = getSentiment(change);
+
+    document.getElementById(`${segment}-summary`).innerHTML = `
+        <div class="ai-summary">
+            <h4>AI Market Summary</h4>
+            <p>${text}</p>
+            <span class="sentiment ${sentiment.class}">
+                ${sentiment.label}
+            </span>
+        </div>
+    `;
+}
+
+/* ===== AUTO-REFRESH ===== */
+setInterval(() => {
+    location.reload();
+}, 1000 * 60 * 10); // every 10 minutes
