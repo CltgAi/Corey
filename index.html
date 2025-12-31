@@ -22,11 +22,56 @@
 
 <!-- DASHBOARD -->
 <section id="dashboard" class="section active">
-    <div class="card">
-        <h3>Welcome</h3>
-        <p>AI-powered market intelligence dashboard</p>
+
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <p>Live global market overview</p>
+  </div>
+
+  <div class="dashboard-grid">
+
+    <!-- MAIN CONTENT -->
+    <div class="dashboard-main">
+
+      <!-- AI SUMMARY -->
+      <div class="card ai-card" id="dashboard-summary"></div>
+
+      <!-- MARKET OVERVIEW -->
+      <div class="card">
+        <h3>Global Markets</h3>
+        <div id="tv-indices"></div>
+      </div>
+
+      <!-- STOCKS -->
+      <div class="card">
+        <h3>Stocks Snapshot</h3>
+        <div id="tv-stocks"></div>
+      </div>
+
+      <!-- CRYPTO -->
+      <div class="card">
+        <h3>Crypto Snapshot</h3>
+        <div id="tv-crypto"></div>
+      </div>
+
+      <!-- BONDS -->
+      <div class="card">
+        <h3>Bonds & Rates</h3>
+        <div id="tv-bonds"></div>
+      </div>
+
     </div>
+
+    <!-- SIDEBAR NEWS -->
+    <aside class="dashboard-sidebar">
+      <h3>Market News</h3>
+
+      <div id="tv-news"></div>
+    </aside>
+
+  </div>
 </section>
+
 
 <!-- FINANCE -->
 <section id="finance" class="section">
