@@ -1,265 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Corey AI — Pro UI Scaled Chart</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <style>
-    .glass {
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(8px) saturate(120%);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    body.dark .glass {
-      background: rgba(8,10,12,0.5);
-      border: 1px solid rgba(255,255,255,0.04);
-    }
-    .metric { font-variant-numeric: tabular-nums; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Corey New AI – Pro Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="antialiased bg-gray-50 text-gray-900 dark:bg-[#0b0f14] dark:text-gray-100">
-<div class="min-h-screen flex">
+<body>
 
-  <!-- SIDEBAR -->
-  <aside class="w-72 bg-gradient-to-b from-slate-900 to-slate-800 text-slate-100 p-6 hidden md:block">
-    <div class="mb-8">
-      <h1 class="text-2xl font-semibold">Corey AI</h1>
-      <p class="text-sm text-slate-300 mt-1">Pro Dashboard v01</p>
-    </div>
-    <nav class="space-y-2">
-      <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#dashboard">Dashboard</a>
-      <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#finance">Finance</a>
-      <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#crypto">Crypto</a>
-      <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#upload">Upload</a>
-      <a class="block px-3 py-2 rounded-lg hover:bg-white/5" href="#settings">Settings</a>
+<header>
+    <h1>Corey New AI</h1>
+    <nav>
+        <a href="#dashboard" class="active" onclick="showSection('dashboard')">Dashboard</a>
+        <a href="#finance" onclick="showSection('finance')">Finance</a>
+        <a href="#crypto" onclick="showSection('crypto')">Crypto</a>
+        <a href="#markets" onclick="showSection('markets')">Markets</a>
     </nav>
-  </aside>
+</header>
 
-  <!-- MAIN CONTENT -->
-  <main class="flex-1 p-6 max-w-7xl mx-auto">
+<main>
 
-    <!-- TOPBAR -->
-    <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-      <div>
-        <h2 class="text-2xl font-bold">Live Market Suite</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400">Overview · Real-time insights · Upload & analyze</p>
-      </div>
-      <div class="flex flex-wrap gap-3 items-center">
-        <button id="financeBtn" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg">Finance</button>
-        <button id="cryptoBtn" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg">Crypto</button>
-        <button id="darkToggle" class="px-3 py-1 rounded-full text-sm bg-white/60 dark:bg-white/5">Dark Mode</button>
-        <button id="refreshAll" class="px-3 py-1 rounded-full text-sm bg-white/60 dark:bg-white/5">Refresh</button>
-      </div>
-    </header>
+<!-- DASHBOARD -->
+<section id="dashboard" class="section active">
+    <div class="card">
+        <h3>Welcome</h3>
+        <p>AI-powered market intelligence dashboard</p>
+    </div>
+</section>
 
-    <!-- METRICS ROW -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-      <div class="p-4 rounded-2xl glass">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-sm text-gray-400">Total Market Cap</p>
-            <div class="mt-2 text-2xl font-semibold metric">$--</div>
-          </div>
-          <div class="text-green-400 font-bold">+0.0%</div>
-        </div>
+<!-- FINANCE -->
+<section id="finance" class="section">
+  <div class="segment-layout">
+
+    <div class="segment-main">
+      <div id="finance-summary"></div>
+
+      <button class="refresh-btn" onclick="location.reload()">Refresh Markets</button>
+
+      <div class="card">
+        <h3>Stocks</h3>
+        <div id="stocks-widget"></div>
       </div>
 
-      <div class="p-4 rounded-2xl glass">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-sm text-gray-400">Top Gainer (24h)</p>
-            <div class="mt-2 text-2xl font-semibold metric">—</div>
-          </div>
-          <div class="text-green-400 font-bold">+0.0%</div>
-        </div>
+      <div class="card">
+        <h3>Bonds</h3>
+        <div id="bonds-widget"></div>
       </div>
+    </div>
 
-      <div class="p-4 rounded-2xl glass">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-sm text-gray-400">Watchlist Change</p>
-            <div class="mt-2 text-2xl font-semibold metric">—</div>
-          </div>
-          <div class="text-red-400 font-bold">-0.0%</div>
-        </div>
-      </div>
-    </section>
+    <aside class="segment-news">
+      <h4>Finance News</h4>
+      <script src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js">
+      {
+        "colorTheme": "dark",
+        "displayMode": "adaptive",
+        "width": "100%",
+        "height": 480,
+        "locale": "en",
+        "categories": ["economy","stock","bond"]
+      }
+      </script>
+    </aside>
 
-    <!-- MAIN GRID -->
-    <section class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-
-      <!-- Market Chart -->
-      <div class="p-6 rounded-3xl glass max-w-full sm:max-w-4xl mx-auto" style="height: 320px;">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-lg font-semibold">Market Overview (24h)</h3>
-          <div class="text-sm text-gray-400">USD · Live</div>
-        </div>
-        <canvas id="marketChart"></canvas>
-      </div>
-
-      <!-- Right Column Cards -->
-      <div class="space-y-4">
-        <div class="p-4 rounded-2xl glass" id="cryptoCard">
-          <h4 class="font-semibold mb-3">Top Cryptos</h4>
-          <div id="crypto-list" class="space-y-2 text-sm text-gray-200">Loading…</div>
-        </div>
-        <div class="p-4 rounded-2xl glass" id="financeCard">
-          <h4 class="font-semibold mb-3">Live US Stocks</h4>
-          <div id="stocks-list" class="space-y-2 text-sm text-gray-200">Loading…</div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- SECOND ROW: Tables / Upload -->
-    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-      <div class="col-span-2 p-6 rounded-3xl glass">
-        <h3 class="font-semibold mb-4">Top 50 Live Prices</h3>
-        <div id="top50-scroll" style="max-height:380px; overflow:auto">Loading…</div>
-      </div>
-      <div class="p-6 rounded-3xl glass">
-        <h3 class="font-semibold mb-3">Upload CSV</h3>
-        <input id="csvUpload" type="file" accept=".csv" class="w-full p-3 rounded-lg bg-white/5" />
-        <p class="text-sm text-gray-400 mt-3">Supported: date, symbol, price — CSV with header row.</p>
-      </div>
-    </section>
-
-    <footer class="mt-8 text-sm text-gray-500">© Corey AI — Pro UI • Built for GitHub Pages</footer>
-  </main>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-
-  // Chart.js initialization
-  const ctx = document.getElementById('marketChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: Array.from({length: 24}, (_, i) => `${i}h`),
-      datasets: [{
-        label: 'Market Index',
-        data: Array.from({length: 24}, () => Math.random()*1000 + 2000),
-        borderColor: 'rgba(59, 130, 246, 1)',
-        backgroundColor: 'rgba(59, 130, 246, 0.2)',
-        tension: 0.3,
-        fill: true,
-        pointRadius: 2,
-        pointHoverRadius: 4
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        x: { grid: { display: false }, title: { display: true, text: 'Hour' } },
-        y: { beginAtZero: false, title: { display: true, text: 'USD Value' } }
-      },
-      plugins: { legend: { display: true, position: 'top' } }
-    }
-  });
-
-  // Show/hide Finance & Crypto cards
-  const financeBtn = document.getElementById('financeBtn');
-  const cryptoBtn = document.getElementById('cryptoBtn');
-  const financeCard = document.getElementById('financeCard');
-  const cryptoCard = document.getElementById('cryptoCard');
-
-  financeBtn.addEventListener('click', () => {
-    financeCard.classList.remove('hidden');
-    cryptoCard.classList.add('hidden');
-  });
-  cryptoBtn.addEventListener('click', () => {
-    cryptoCard.classList.remove('hidden');
-    financeCard.classList.add('hidden');
-  });
-
-  // Refresh button hook
-  const refresh = document.getElementById('refreshAll');
-  if (refresh) refresh.addEventListener('click', () => { window.refreshAll && window.refreshAll(); });
-});
-</script>
-
-</body>
-</html> <link rel="stylesheet" href="style.css">
-
-<div class="tabs">
-  <button class="tab-button active" onclick="showFinanceTab('crypto')">Crypto</button>
-  <button class="tab-button" onclick="showFinanceTab('stocks')">Stocks</button>
-  <button class="tab-button" onclick="showFinanceTab('bonds')">Bonds</button>
-  <button class="tab-button" onclick="showFinanceTab('news')">News</button>
-</div>
-
-<div id="crypto" class="finance-tab active">
-  <div class="card">
-    <h3>Top Cryptocurrencies</h3>
-    <div id="crypto-widget"></div>
   </div>
-</div>
+</section>
 
-<div id="stocks" class="finance-tab">
-  <div class="card">
-    <h3>Top Stocks</h3>
-    <div id="stocks-widget"></div>
-  </div>
-</div>
+<!-- CRYPTO -->
+<section id="crypto" class="section">
+  <div class="segment-layout">
 
-<div id="bonds" class="finance-tab">
-  <div class="card">
-    <h3>Government & Corporate Bonds</h3>
-    <div id="bonds-widget"></div>
-  </div>
-</div>
+    <div class="segment-main">
+      <div id="crypto-summary"></div>
 
-<div id="news" class="finance-tab">
-  <div class="card">
-    <h3>Live Market News</h3>
-    <div id="news-widget"></div>
+      <div class="card">
+        <h3>Crypto Market</h3>
+        <div id="crypto-widget"></div>
+      </div>
+    </div>
+
+    <aside class="segment-news">
+      <h4>Crypto News</h4>
+      <script src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js">
+      {
+        "colorTheme": "dark",
+        "displayMode": "adaptive",
+        "width": "100%",
+        "height": 480,
+        "locale": "en",
+        "categories": ["crypto"]
+      }
+      </script>
+    </aside>
+
   </div>
-</div>
+</section>
+
+<!-- MARKETS -->
+<section id="markets" class="section">
+  <div class="segment-layout">
+
+    <div class="segment-main">
+      <div id="markets-summary"></div>
+
+      <div class="card">
+        <h3>Global Indices</h3>
+        <div id="indices-widget"></div>
+      </div>
+    </div>
+
+    <aside class="segment-news">
+      <h4>Global Market News</h4>
+      <script src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js">
+      {
+        "colorTheme": "dark",
+        "displayMode": "adaptive",
+        "width": "100%",
+        "height": 480,
+        "locale": "en",
+        "categories": ["index","forex","economy"]
+      }
+      </script>
+    </aside>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+    Corey New AI © 2025
+</footer>
+
+<script src="app.js"></script>
+
+<!-- TRADINGVIEW MARKET WIDGETS -->
 <script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js">
 {
   "width": "100%",
-  "height": 500,
+  "height": 400,
   "defaultColumn": "overview",
-  "defaultScreen": "crypto_mkt",
-  "market": "crypto",
-  "colorTheme": "dark",
-  "locale": "en"
-}
-</script>
-<script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js">
-{
-  "width": "100%",
-  "height": 500,
-  "defaultColumn": "overview",
-  "defaultScreen": "most_capitalized",
   "market": "america",
   "colorTheme": "dark",
   "locale": "en"
 }
 </script>
+
 <script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js">
 {
   "width": "100%",
-  "height": 500,
-  "defaultColumn": "overview",
+  "height": 400,
+  "market": "crypto",
+  "colorTheme": "dark",
+  "locale": "en"
+}
+</script>
+
+<script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js">
+{
+  "width": "100%",
+  "height": 400,
   "market": "bond",
   "colorTheme": "dark",
   "locale": "en"
 }
 </script>
-<script src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js">
-{
-  "colorTheme": "dark",
-  "isTransparent": false,
-  "displayMode": "adaptive",
-  "width": "100%",
-  "height": 500,
-  "locale": "en"
-}
-</script>
+
+</body>
+</html>
+
