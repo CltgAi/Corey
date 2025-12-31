@@ -51,3 +51,12 @@ updateAISummary(
 setInterval(() => {
     location.reload();
 }, 600000);
+function loadDashboard() {
+  updateAISummary(
+    "dashboard",
+    0.68,
+    "Markets are cautiously bullish. Equities lead gains, crypto stabilizes, while bonds reflect mixed rate expectations."
+  );
+}
+
+document.addEventListener("DOMContentLoaded", loadDashboard);
