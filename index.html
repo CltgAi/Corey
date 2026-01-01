@@ -1,215 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Corey New AI – Pro Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Corey New AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<header>
-    <h1>Corey New AI</h1>
-    <nav>
-        <a href="#dashboard" class="active" onclick="showSection('dashboard')">Dashboard</a>
-        <a href="#finance" onclick="showSection('finance')">Finance</a>
-        <a href="#crypto" onclick="showSection('crypto')">Crypto</a>
-        <a href="#markets" onclick="showSection('markets')">Markets</a>
-    </nav>
+<header class="topbar">
+  <h2>Corey New AI</h2>
+
+  <nav>
+    <a onclick="showSection('dashboard')" class="active">Dashboard</a>
+    <a onclick="showSection('finance')">Finance</a>
+    <a onclick="showSection('crypto')">Crypto</a>
+  </nav>
+
+  <div class="pro-toggle">
+    <label>
+      <input type="checkbox" id="proSwitch" onchange="togglePro()" />
+      Pro
+    </label>
+  </div>
 </header>
 
 <main>
 
-<!-- DASHBOARD -->
+<!-- ================= DASHBOARD ================= -->
 <section id="dashboard" class="section active">
 
-  <div class="dashboard-header">
-    <h1>Dashboard</h1>
-    <p>Live global market overview</p>
-  </div>
+  <h1>Dashboard</h1>
+  <p class="subtitle">Global market overview</p>
 
   <div class="dashboard-grid">
 
-    <!-- MAIN CONTENT -->
     <div class="dashboard-main">
 
-      <!-- AI SUMMARY -->
       <div class="card ai-card" id="dashboard-summary"></div>
 
-      <!-- MARKET OVERVIEW -->
       <div class="card">
-        <h3>Global Markets</h3>
+        <h3>Global Indices</h3>
         <div id="tv-indices"></div>
       </div>
 
-      <!-- STOCKS -->
       <div class="card">
-        <h3>Stocks Snapshot</h3>
+        <h3>Stocks</h3>
         <div id="tv-stocks"></div>
       </div>
 
-      <!-- CRYPTO -->
       <div class="card">
-        <h3>Crypto Snapshot</h3>
+        <h3>Crypto</h3>
         <div id="tv-crypto"></div>
       </div>
 
-      <!-- BONDS -->
       <div class="card">
-        <h3>Bonds & Rates</h3>
+        <h3>Bonds</h3>
         <div id="tv-bonds"></div>
+      </div>
+
+      <div class="card ai-alerts">
+        <h3>AI Alerts</h3>
+        <ul id="ai-alert-list"></ul>
       </div>
 
     </div>
 
-    <!-- SIDEBAR NEWS -->
     <aside class="dashboard-sidebar">
       <h3>Market News</h3>
-
       <div id="tv-news"></div>
     </aside>
 
   </div>
 </section>
 
-
-<!-- FINANCE -->
+<!-- ================= FINANCE ================= -->
 <section id="finance" class="section">
-  <div class="segment-layout">
 
-    <div class="segment-main">
-      <div id="finance-summary"></div>
+  <h1>Finance</h1>
+  <p class="subtitle">Deep financial analysis</p>
 
-      <button class="refresh-btn" onclick="location.reload()">Refresh Markets</button>
-
-      <div class="card">
-        <h3>Stocks</h3>
-        <div id="stocks-widget"></div>
-      </div>
-
-      <div class="card">
-        <h3>Bonds</h3>
-        <div id="bonds-widget"></div>
-      </div>
-    </div>
-
-    <aside class="segment-news">
-      <h4>Finance News</h4>
-      <script src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js">
-      {
-        "colorTheme": "dark",
-        "displayMode": "adaptive",
-        "width": "100%",
-        "height": 480,
-        "locale": "en",
-        "categories": ["economy","stock","bond"]
-      }
-      </script>
-    </aside>
-
+  <div class="tabs">
+    <button class="tab active" onclick="openFinanceTab('stocksTab')">Stocks</button>
+    <button class="tab" onclick="openFinanceTab('bondsTab')">Bonds</button>
+    <button class="tab" onclick="openFinanceTab('cryptoTab')">Crypto</button>
+    <button class="tab" onclick="openFinanceTab('newsTab')">News</button>
   </div>
-</section>
 
-<!-- CRYPTO -->
-<section id="crypto" class="section">
-  <div class="segment-layout">
-
-    <div class="segment-main">
-      <div id="crypto-summary"></div>
-
-      <div class="card">
-        <h3>Crypto Market</h3>
-        <div id="crypto-widget"></div>
-      </div>
-    </div>
-
-    <aside class="segment-news">
-      <h4>Crypto News</h4>
-      <script src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js">
-      {
-        "colorTheme": "dark",
-        "displayMode": "adaptive",
-        "width": "100%",
-        "height": 480,
-        "locale": "en",
-        "categories": ["crypto"]
-      }
-      </script>
-    </aside>
-
+  <div class="tab-content">
+    <div id="stocksTab" class="tab-panel active"><div class="card" id="finance-stocks"></div></div>
+    <div id="bondsTab" class="tab-panel"><div class="card" id="finance-bonds"></div></div>
+    <div id="cryptoTab" class="tab-panel"><div class="card" id="finance-crypto"></div></div>
+    <div id="newsTab" class="tab-panel"><div class="card" id="finance-news"></div></div>
   </div>
-</section>
 
-<!-- MARKETS -->
-<section id="markets" class="section">
-  <div class="segment-layout">
-
-    <div class="segment-main">
-      <div id="markets-summary"></div>
-
-      <div class="card">
-        <h3>Global Indices</h3>
-        <div id="indices-widget"></div>
-      </div>
-    </div>
-
-    <aside class="segment-news">
-      <h4>Global Market News</h4>
-      <script src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js">
-      {
-        "colorTheme": "dark",
-        "displayMode": "adaptive",
-        "width": "100%",
-        "height": 480,
-        "locale": "en",
-        "categories": ["index","forex","economy"]
-      }
-      </script>
-    </aside>
-
-  </div>
 </section>
 
 </main>
 
-<footer>
-    Corey New AI © 2025
-</footer>
+<!-- ================= LIVE WIDGETS ================= -->
+
+<script src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js">
+{
+  "colorTheme": "dark",
+  "height": 260,
+  "tabs": [{
+    "title": "Indices",
+    "symbols": [
+      { "s": "FOREXCOM:SPXUSD", "d": "S&P 500" },
+      { "s": "NASDAQ:NDX", "d": "NASDAQ 100" },
+      { "s": "FOREXCOM:DJI", "d": "Dow Jones" }
+    ]
+  }]
+}
+</script>
+
+<script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js">
+{ "market": "america", "colorTheme": "dark", "height": 260 }
+</script>
+
+<script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js">
+{ "market": "crypto", "colorTheme": "dark", "height": 260 }
+</script>
+
+<script src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js">
+{
+  "colorTheme": "dark",
+  "height": 240,
+  "tabs": [{
+    "title": "Bonds",
+    "symbols": [
+      { "s": "TVC:US10Y", "d": "US 10Y" },
+      { "s": "TVC:DE10Y", "d": "Germany 10Y" }
+    ]
+  }]
+}
+</script>
+
+<script src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js">
+{
+  "colorTheme": "dark",
+  "height": 600,
+  "categories": ["economy","stock","crypto","bond"]
+}
+</script>
 
 <script src="app.js"></script>
-
-<!-- TRADINGVIEW MARKET WIDGETS -->
-<script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js">
-{
-  "width": "100%",
-  "height": 400,
-  "defaultColumn": "overview",
-  "market": "america",
-  "colorTheme": "dark",
-  "locale": "en"
-}
-</script>
-
-<script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js">
-{
-  "width": "100%",
-  "height": 400,
-  "market": "crypto",
-  "colorTheme": "dark",
-  "locale": "en"
-}
-</script>
-
-<script src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js">
-{
-  "width": "100%",
-  "height": 400,
-  "market": "bond",
-  "colorTheme": "dark",
-  "locale": "en"
-}
-</script>
-
 </body>
 </html>
-
