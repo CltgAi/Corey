@@ -1,62 +1,47 @@
 function showSection(id) {
-    document.querySelectorAll(".section").forEach(sec => {
-        sec.classList.remove("active");
-    });
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 
-    document.querySelectorAll("nav a").forEach(a => {
-        a.classList.remove("active");
-    });
-
-    document.getElementById(id).classList.add("active");
-    event.target.classList.add("active");
+  document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
+  event.target.classList.add("active");
 }
 
-function getSentiment(change) {
-    if (change > 0.7) return { label: "Bullish", class: "bullish" };
-    if (change < -0.7) return { label: "Bearish", class: "bearish" };
-    return { label: "Neutral", class: "neutral" };
+function openFinanceTab(tabId) {
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+
+  document.getElementById(tabId).classList.add("active");
+  event.target.classList.add("active");
 }
 
-function updateAISummary(segment, change, text) {
-    const s = getSentiment(change);
+function updateAISummary(id, score, text) {
+  const el = document.getElementById(id + "-summary");
+  if (!el) return;
 
-    document.getElementById(`${segment}-summary`).innerHTML = `
-        <div class="ai-summary">
-            <strong>AI Market Summary</strong>
-            <p>${text}</p>
-            <span class="sentiment ${s.class}">${s.label}</span>
-        </div>
-    `;
+  el.innerHTML = `<h3>AI Market Summary</h3><p>${text}</p>`;
 }
 
-updateAISummary(
-    "finance",
-    0.8,
-    "Equity markets remain strong while bond yields stabilize."
-);
+function generateAIAlerts() {
+  const alerts = [
+    "⚠️ Tech stocks showing overbought signals",
+    "📈 Crypto volatility rising",
+    "📉 Bond yields pressuring equities",
+    "🧠 AI suggests defensive positioning"
+  ];
 
-updateAISummary(
-    "crypto",
-    -0.4,
-    "Crypto markets consolidate as volatility cools."
-);
+  document.getElementById("ai-alert-list").innerHTML =
+    alerts.map(a => `<li>${a}</li>`).join("");
+}
 
-updateAISummary(
-    "markets",
-    0.2,
-    "Global markets show mixed signals amid macro uncertainty."
-);
+function togglePro() {
+  document.body.classList.toggle("pro");
+}
 
-/* AUTO REFRESH EVERY 10 MINUTES */
-setInterval(() => {
-    location.reload();
-}, 600000);
-function loadDashboard() {
+document.addEventListener("DOMContentLoaded", () => {
   updateAISummary(
     "dashboard",
-    0.68,
-    "Markets are cautiously bullish. Equities lead gains, crypto stabilizes, while bonds reflect mixed rate expectations."
+    0.7,
+    "Markets remain cautiously bullish with mixed signals across assets."
   );
-}
-
-document.addEventListener("DOMContentLoaded", loadDashboard);
+  generateAIAlerts();
+});
