@@ -26,7 +26,7 @@ nav a.active {
 
 .section {
   display: none;
-  padding: 25px;
+  padding: 24px;
 }
 
 .section.active {
@@ -35,20 +35,21 @@ nav a.active {
 
 .subtitle {
   color: #9fb3c8;
+  margin-bottom: 20px;
 }
 
-.dashboard-grid {
+.segment-layout {
   display: grid;
   grid-template-columns: 3fr 1.2fr;
   gap: 20px;
 }
 
-.dashboard-main {
+.segment-main {
   display: grid;
   gap: 20px;
 }
 
-.dashboard-sidebar {
+.segment-side {
   background: #0b1220;
   padding: 15px;
   border-radius: 12px;
@@ -61,8 +62,11 @@ nav a.active {
   border: 1px solid #1f3b66;
 }
 
-.ai-card {
+.ai-summary {
   background: linear-gradient(135deg, #0a1e3f, #102b55);
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid #2a5da8;
 }
 
 .tabs {
@@ -93,16 +97,11 @@ nav a.active {
   display: block;
 }
 
-.ai-alerts ul {
-  padding-left: 18px;
-}
-
 .pro-toggle {
   color: white;
 }
 
 body.pro .card {
   border-color: #3b82f6;
-  box-shadow: 0 0 22px rgba(59,130,246,0.35);
+  box-shadow: 0 0 18px rgba(59,130,246,0.3);
 }
-
